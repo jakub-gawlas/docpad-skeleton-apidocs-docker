@@ -1,0 +1,54 @@
+job1:
+  # a generic label for a job.  Currently not used make it whatever you want
+  label: Watch files in /docu-src for modify
+
+  # directory or file to watch.  Probably should be abs path.
+  watch: /docu-src
+  # directories or files to exclude
+  exclude: []
+
+  # list of events to watch for.
+  # supported events:
+  # 'access' - File was accessed (read) (*)
+  # 'atrribute_change' - Metadata changed (permissions, timestamps, extended attributes, etc.) (*)
+  # 'write_close' - File opened for writing was closed (*)
+  # 'nowrite_close' - File not opened for writing was closed (*)
+  # 'create' - File/directory created in watched directory (*)
+  # 'delete' - File/directory deleted from watched directory (*)
+  # 'self_delete' - Watched file/directory was itself deleted
+  # 'modify' - File was modified (*)
+  # 'self_move' - Watched file/directory was itself moved
+  # 'move_from' - File moved out of watched directory (*)
+  # 'move_to' - File moved into watched directory (*)
+  # 'open' - File was opened (*)
+  # 'all' - Any of the above events are fired
+  # 'move' - A combination of 'move_from' and 'move_to'
+  # 'close' - A combination of 'write_close' and 'nowrite_close'
+  #
+  # When monitoring a directory, the events marked with an asterisk (*) above
+  # can occur for files in the directory, in which case the name field in the
+  # returned event data identifies the name of the file within the directory.
+  events: ['create', 'move_from', 'move_to', 'delete', 'modify']
+
+  options: []
+
+  # if true, watcher will monitor directories recursively for changes
+  recursive: true
+
+  # the command to run. Can be any command. It's run as whatever user started watcher.
+  # The following wildards may be used inside command specification:
+  # $$ dollar sign
+  # $watched watched filesystem path (see above)
+  # $filename event-related file name
+  # $tflags event flags (textually)
+  # $nflags event flags (numerically)
+  # $dest_file this will manage recursion better if included as the dest (especially when copying or similar)
+  #     if $dest_file was left out of the command below, Watcher won't properly
+  #     handle newly created directories when watching recursively. It's fine
+  #     to leave out when recursive is false or you won't be creating new
+  #     directories.
+  # $src_path is only used in move_to and is the corresponding path from move_from
+  # $src_rel_path [needs doc]
+  # $datetime output date and time of the event, format is : Y-m-d H:M:S
+  # command: cp -r $filename /home/user/Documents/$dest_file # $src_path
+  command: gulp --gulpfile /docpad-skeleton-apidocs/gulpfile.js start -l './registry'

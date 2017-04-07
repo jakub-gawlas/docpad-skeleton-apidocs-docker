@@ -1,0 +1,13 @@
+{
+  "name": "My service",
+  "type": "services",
+  "area": "Services",
+  "source": [
+    {
+      "version": "v1",
+      "latest": true,
+      "local": true,
+      "location": "../docu-src"
+    }
+  ]
+}
